@@ -1,0 +1,24 @@
+html{
+    display: flex;
+    background-color: blues;
+}
+body{
+    display: flex;
+    min-height: 100%;
+    background-color: #1b1224;
+}
+.element{
+    position: fixed;
+    bottom:10px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width:50px;
+    height:50px;
+    border: 1px solid #fefefe;
+    border-radius: 50%;
+}
+.activator{
+    color:#fefefe;
+    cursor: pointer;
+}
