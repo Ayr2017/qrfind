@@ -13,14 +13,14 @@ activator.addEventListener('click', () => {
     var url = new Url();
     var href = url.href
     var qrCode = new QRCodeApi(href);
-    // qrCode.getQRCode();
     img = qrCode.getImage()
     img.then((response)=>{
-        var image = new Image(response);
+        var image = new Image(response, element);
         image.createInto(element);
     })
 })
 
+// Получение URL страницы
 class Url {
     constructor() {
         this.url = window.location.href
@@ -30,26 +30,12 @@ class Url {
     }
 }
 
+// получение изображения из API
 class QRCodeApi {
     constructor(href,side=150) {
         this.href = href;
         this.side = side;
         this.image = null;
-    }
-    async getQRCode() {
-        var response = await fetch(`https://api.qrserver.com/v1/create-qr-code/?size=${this.side}x${this.side}&data=${this.href}`)
-        let blob = await response.blob();
-        let img = document.createElement('img');
-        img.style = 'position:fixed;bottom:10px;left:10px;';
-        img.setAttribute('onclick','hideQR()');
-        img.id ='QR';
-        img.src = URL.createObjectURL(blob);
-        
-        // вывод
-        element.append(img);
-        element.style.width = '150px';
-        element.style.height = '150px';
-        element.style.borderRadius = 0;
     }
     async getImage(){
         var response = await fetch(`https://api.qrserver.com/v1/create-qr-code/?size=${this.side}x${this.side}&data=${this.href}`)
@@ -63,15 +49,18 @@ class QRCodeApi {
     }
 }
 
+
+// вывод изображения на нужном элементе
 class Image{
-    constructor(img){
+    constructor(img, element){
         this.img = img;
+        this.element = element;
     }
     createInto(){
-        element.append(this.img);
-        element.style.width = '150px';
-        element.style.height = '150px';
-        element.style.borderRadius = 0;
+        this.element.append(this.img);
+        this.element.style.width = '150px';
+        this.element.style.height = '150px';
+        this.element.style.borderRadius = 0;
     }
 }
 
